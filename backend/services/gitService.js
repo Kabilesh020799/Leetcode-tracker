@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const simpleGit = require("simple-git");
+const { execSync } = require("child_process");
 
 const REMOTE_REPO_URL = process.env.GITHUB_URL;
 const TARGET_BRANCH = "master";
@@ -18,6 +19,13 @@ exports.pushToDifferentRepo = async (filePath, problemName, difficulty) => {
       console.log("🧼 Cleaned temp_clone folder");
     }
 
+    try {
+      execSync('eval "$(ssh-agent -s)"');
+      execSync("ssh-add /render/secrets/id_rsa");
+      console.log("🔐 SSH key added");
+    } catch (err) {
+      console.error("❌ Failed to load SSH key:", err.message);
+    }
     const git = simpleGit();
     console.log("📥 Cloning repo...");
     await git.clone(REMOTE_REPO_URL, tempRepoPath);
