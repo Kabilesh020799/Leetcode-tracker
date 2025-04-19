@@ -1,5 +1,5 @@
 backend/node_modules
 backend/services/temp_clone
 backend/services/temp_repo
-backend/service-accout-json
+backend/service-accout.json
 backend/.env
