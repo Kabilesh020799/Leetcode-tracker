@@ -23,6 +23,8 @@ exports.pushToDifferentRepo = async (filePath, problemName, difficulty) => {
       console.log("🧼 Cleaned temp_clone folder");
     }
     process.env.GIT_SSH_COMMAND = "ssh -F /etc/secrets/ssh_config";
+    console.log("📁 /etc/secrets contains:", fs.readdirSync("/etc/secrets"));
+    console.log("🔐 Using SSH config at:", process.env.GIT_SSH_COMMAND);
 
     const git = simpleGit();
     console.log("📥 Cloning repo from:", REMOTE_REPO_URL);
