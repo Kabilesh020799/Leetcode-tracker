@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const simpleGit = require("simple-git");
+const { execSync } = require("child_process");
 
 const REMOTE_REPO_URL = process.env.GITHUB_URL;
 const TARGET_BRANCH = "master"; // or "main" based on your GitHub repo
@@ -11,7 +12,13 @@ exports.pushToDifferentRepo = async (filePath, problemName, difficulty) => {
     const rawFilename = path.basename(filePath);
     const filename = sanitizeFilename(rawFilename);
     const commitMessage = `Add ${problemName} (${difficulty})`;
-
+    try {
+      execSync('eval "$(ssh-agent -s)"');
+      execSync("ssh-add /etc/secrets/id_rsa");
+      console.log("✅ SSH key added");
+    } catch (err) {
+      console.error("❌ Failed to load SSH key:", err.message);
+    }
     console.log("🚀 Starting GitHub push process...");
     console.log("📦 Filename:", filename);
     console.log("📝 Commit message:", commitMessage);
