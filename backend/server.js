@@ -8,7 +8,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use("/api", submissionRoutes);
 
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
