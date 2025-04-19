@@ -22,6 +22,7 @@ exports.pushToDifferentRepo = async (filePath, problemName, difficulty) => {
       fs.rmSync(tempRepoPath, { recursive: true, force: true });
       console.log("🧼 Cleaned temp_clone folder");
     }
+    process.env.GIT_SSH_COMMAND = "ssh -F /render/secrets/ssh_config";
 
     const git = simpleGit();
     console.log("📥 Cloning repo from:", REMOTE_REPO_URL);
